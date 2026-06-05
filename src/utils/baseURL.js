@@ -15,7 +15,5 @@ export const getBaseUrl = () => {
     return import.meta.env.VITE_API_URL;
   }
 
-  return 'https://basha-ecommerce-backend-17el.onrender.com';
+  return 'https://basha-ecommerce-backend-17el.onrender.com/api';
 };
-
-// For local dev override: set VITE_API_URL in .env and use import.meta.env.VITE_API_URL
