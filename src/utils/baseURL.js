@@ -1,4 +1,14 @@
 export const getBaseUrl = () => {
+  // Prefer explicit environment variable when available (set by Vercel / local .env)
+  try {
+    if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) {
+      return import.meta.env.VITE_API_URL;
+    }
+  } catch (e) {
+    // ignore
+  }
+
+  // Fallback to detecting local dev host
   try {
     if (typeof window !== 'undefined') {
       const hostname = window.location.hostname;
@@ -11,9 +21,6 @@ export const getBaseUrl = () => {
     console.error('Error detecting base URL:', e);
   }
 
-  if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL;
-  }
-
-  return 'https://basha-ecommerce-backend-17el.onrender.com/api';
+  // Final fallback
+  return 'https://basha-ecommerce-backend-17el.onrender.com';
 };
