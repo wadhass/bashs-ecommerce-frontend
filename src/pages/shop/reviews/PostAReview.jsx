@@ -5,7 +5,7 @@ import { useFetchProductByIdQuery } from '../../../redux/features/products/produ
 import { usePostReviewMutation } from '../../../redux/features/reviews/Reviews.Api';
 import { toast } from 'react-hot-toast';
 
-const PostAReview = ({ isModalOpen, handleClose }) => {
+const PostAReview = ({ isModalOpen, handleClose, onLocalSubmit }) => {
   const { id } = useParams();
   // Adjust selector to grab the actual user object from auth slice
   const authUserState = useSelector((state) => state.auth.user);
@@ -32,6 +32,44 @@ const PostAReview = ({ isModalOpen, handleClose }) => {
     }
     if (!comment.trim() || !rating) {
       toast.error('Please provide a comment and rating.');
+      return;
+    }
+
+    // Validate productId (must be a 24-char hex string for Mongo ObjectId)
+    const isMongoId = (value) => typeof value === 'string' && /^[0-9a-fA-F]{24}$/.test(value);
+    const isLocalProduct = !isMongoId(id);
+
+    // If local product, use local handler or localStorage fallback
+    if (isLocalProduct) {
+      const localReview = {
+        _id: `local_${Date.now()}`,
+        comment: comment.trim(),
+        rating,
+        user: {
+          _id: user._id || `local_user_${user?.username || 'anon'}`,
+          username: user?.username || 'Anonymous'
+        },
+        createdAt: new Date().toISOString(),
+        productId: id,
+      };
+
+      try {
+        if (typeof onLocalSubmit === 'function') {
+          onLocalSubmit(localReview);
+        } else {
+          const key = `localReviews:${id}`;
+          const existing = JSON.parse(localStorage.getItem(key) || '[]');
+          existing.unshift(localReview);
+          localStorage.setItem(key, JSON.stringify(existing));
+        }
+        toast.success('Comment posted successfully');
+        setComment('');
+        setRating(0);
+        handleClose();
+      } catch (err) {
+        console.error('Local review save error:', err);
+        toast.error('Failed to save review locally');
+      }
       return;
     }
 

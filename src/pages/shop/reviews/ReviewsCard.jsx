@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import commentorIcon from '../../../assets/avatar.png';
 import { formatDate } from '../../../utils/formatDate'
 import RatingStars from '../../../components/RatingStars';
@@ -7,6 +8,33 @@ import PostAReview from './PostAReview';
 const ReviewsCard = ({ productReviews }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const reviews = productReviews || [];
+  const displayReviews = [...reviews, ...localReviews];
+  const { id } = useParams();
+  const isMongoId = (value) => typeof value === 'string' && /^[0-9a-fA-F]{24}$/.test(value);
+  const [localReviews, setLocalReviews] = useState([]);
+
+  useEffect(() => {
+    // load local reviews for this product if any
+    try {
+      const key = `localReviews:${id}`;
+      const lst = JSON.parse(localStorage.getItem(key) || '[]');
+      setLocalReviews(lst || []);
+    } catch (err) {
+      setLocalReviews([]);
+    }
+  }, [id]);
+
+  const handleLocalSubmit = (review) => {
+    try {
+      const key = `localReviews:${id}`;
+      const existing = JSON.parse(localStorage.getItem(key) || '[]');
+      existing.unshift(review);
+      localStorage.setItem(key, JSON.stringify(existing));
+      setLocalReviews(existing);
+    } catch (err) {
+      console.error('Saving local review failed:', err);
+    }
+  };
 
   const handleOpenAddReviewModal = () => {
     setIsModalOpen(true);
@@ -23,7 +51,7 @@ const ReviewsCard = ({ productReviews }) => {
           <div>
             <h3 className='text-lg font-medium'>All comments...</h3>
             <div>
-              {reviews.map((review) => (
+              {displayReviews.map((review) => (
                 <div key={review._id} className='mt-4'> {/* Use unique id for key */}
                   <div className='flex gap-4 items-center'>
                     <img src={commentorIcon} alt="" className='w-14 h-14 rounded-full' /> {/* Consistent avatar size */}
@@ -33,7 +61,7 @@ const ReviewsCard = ({ productReviews }) => {
                         {review?.userId?.username}
                       </p>
                       <p className='text-[12px] italic'>
-                        Updated: {formatDate(review?.updateAt)} {/* Added "Updated" for clarity */}
+                        Updated: {formatDate(review?.updateAt || review?.createdAt)} {/* Added "Updated" for clarity */}
                       </p>
                       <RatingStars rating={review?.rating} />
                     </div>
@@ -61,7 +89,7 @@ const ReviewsCard = ({ productReviews }) => {
       </div>
 
       {/* Reviews modal */}
-      <PostAReview isModalOpen={isModalOpen} handleClose={handleCloseAddReviewModal} />
+      <PostAReview isModalOpen={isModalOpen} handleClose={handleCloseAddReviewModal} onLocalSubmit={handleLocalSubmit} />
     </div>
   );
 };
