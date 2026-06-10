@@ -7,11 +7,11 @@ import PostAReview from './PostAReview';
 
 const ReviewsCard = ({ productReviews }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [localReviews, setLocalReviews] = useState([]);
   const reviews = productReviews || [];
   const displayReviews = [...reviews, ...localReviews];
   const { id } = useParams();
   const isMongoId = (value) => typeof value === 'string' && /^[0-9a-fA-F]{24}$/.test(value);
-  const [localReviews, setLocalReviews] = useState([]);
 
   useEffect(() => {
     // load local reviews for this product if any
@@ -75,7 +75,7 @@ const ReviewsCard = ({ productReviews }) => {
             </div>
           </div>
         ) : (
-          <p className="text-gray-500">No reviews yet! Be the first to review this product.</p> // Friendly message
+          <p className="text-gray-500">No reviews yet! Be the first to review this product.</p>
         )}
       </div>
 

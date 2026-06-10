@@ -105,4 +105,77 @@
       "color": "green",
       "rating": 3
     }
+    ,
+    {
+      "id": 11,
+      "name": "Denim Jacket",
+      "category": "outerwear",
+      "description": "Classic denim jacket with a relaxed fit.",
+      "price": 89.99,
+      "image": "https://picsum.photos/seed/denimjacket/800/800",
+      "color": "blue",
+      "rating": 4.4
+    },
+    {
+      "id": 12,
+      "name": "Running Sneakers",
+      "category": "shoes",
+      "description": "Lightweight running sneakers with breathable mesh.",
+      "price": 69.99,
+      "oldPrice": 89.99,
+      "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+      "color": "white",
+      "rating": 4.5
+    },
+    {
+      "id": 13,
+      "name": "Boho Maxi Skirt",
+      "category": "dress",
+      "description": "Flowy bohemian maxi skirt with floral print.",
+      "price": 49.99,
+      "image": "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+      "color": "multi",
+      "rating": 4.2
+    },
+    {
+      "id": 14,
+      "name": "Classic Watch",
+      "category": "accessories",
+      "description": "Minimalist classic wristwatch with leather strap.",
+      "price": 129.99,
+      "image": "https://picsum.photos/seed/classicwatch/800/800",
+      "color": "brown",
+      "rating": 4.6
+    },
+    {
+      "id": 15,
+      "name": "Organic Face Cream",
+      "category": "cosmetics",
+      "description": "Hydrating organic face cream for daily use.",
+      "price": 24.99,
+      "image": "https://picsum.photos/seed/organicfacecream/800/800",
+      "color": "beige",
+      "rating": 4.3
+    },
+    {
+      "id": 16,
+      "name": "Travel Backpack",
+      "category": "accessories",
+      "description": "Durable travel backpack with laptop compartment.",
+      "price": 99.99,
+      "oldPrice": 129.99,
+      "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+      "color": "grey",
+      "rating": 4.5
+    },
+    {
+      "id": 17,
+      "name": "Statement Earrings",
+      "category": "jewellery",
+      "description": "Bold statement earrings to complete any look.",
+      "price": 34.99,
+      "image": "https://picsum.photos/seed/statementearrings/800/800",
+      "color": "gold",
+      "rating": 4.1
+    }
   ]

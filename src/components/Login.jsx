@@ -100,9 +100,17 @@ const Login = () => {
                     {message && <p className='text-red-500'>{message}</p>}
                     <button
                         type="submit"
-                        className="w-full mt-5 bg-primary text-white hover:bg-indigo-500 font-medium py-3 rounded-md"
+                        disabled={loginLoading}
+                        className={`w-full mt-5 bg-primary text-white font-medium py-3 rounded-md flex items-center justify-center gap-2 transition-transform duration-200 ${loginLoading ? 'opacity-80 scale-95 cursor-wait' : 'hover:scale-105'}`}
                     >
-                        Login
+                        {loginLoading ? (
+                            <svg className="w-5 h-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                            </svg>
+                        ) : (
+                            'Login'
+                        )}
                     </button>
                 </form>
                 <p className='my-5 italic text-sm text-center'>
